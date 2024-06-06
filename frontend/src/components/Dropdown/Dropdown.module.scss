@@ -1,0 +1,97 @@
+.container {
+  position: relative;
+  max-width: 200px;
+  width: 100%;
+  height: fit-content;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.dropdownHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 20px;
+  color: $grey-color;
+  background-color: $white-color;
+  border: 1px solid $grey-color;
+  border-radius: $border-radius;
+  user-select: none;
+  transition: 0.3s ease-in-out;
+
+  &::after {
+    content: url('../../assets/arrow-down-icon.svg');
+    stroke: $grey-color;
+    width: 24px;
+    height: 24px;
+    transition: 0.3s ease-in-out;
+  }
+
+  &.opened {
+    border-color: $blue-color;
+  }
+
+  &.active {
+    color: $black-color;
+  }
+
+  &.opened::after {
+    content: url('../../assets/arrow-up-icon.svg');
+    transform: rotate(-180deg);
+    transition: 0.3s ease-in-out;
+  }
+
+  &:hover {
+    border-color: $blue-color;
+    transition: 0.3s ease-in-out;
+  }
+}
+
+.label {
+  margin-bottom: 0.2rem;
+}
+
+.dropdownList {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  padding: 4px;
+  background: $white-color;
+  border-radius: $border-radius;
+  border: 1px solid $grey-color;
+  transition: 0.5s ease-in-out;
+  z-index: 10;
+}
+
+.item {
+  padding: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  color: $black-color;
+  transition: 0.3s ease-in-out;
+  user-select: none;
+  cursor: pointer;
+
+  &:hover {
+    padding: 8px 12px;
+    color: $white-color;
+    border-radius: 8px;
+    background-color: $dark-blue-color;
+  }
+
+  &.selected {
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 20px;
+    color: $white-color;
+    border-radius: $border-radius;
+    background-color: $blue-color;
+    opacity: 0.8;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+  }
+}
