@@ -1,0 +1,25 @@
+.container {
+  @include flexbox($justify-content: space-between, $flex: 1);
+}
+
+.year,
+.github {
+  flex: 1;
+  font-size: 1.15rem;
+}
+
+.year {
+  text-align: center;
+}
+
+.github {
+  text-align: center;
+  transition: color 0.3s ease;
+
+  @media (hover: hover) {
+    &:hover {
+      color: $purple-light-color;
+      transition: color 0.3s ease;
+    }
+  }
+}
