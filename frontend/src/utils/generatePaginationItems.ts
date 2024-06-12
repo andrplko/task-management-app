@@ -19,6 +19,6 @@ const generatePaginationItems = (currentPage: number, totalPages: number) => {
   if (includeRightDots) filteredCenter.push('...');
 
   return [1, ...filteredCenter, totalPages];
-}
+};
 
 export { generatePaginationItems };
