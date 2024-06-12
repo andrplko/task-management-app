@@ -1,0 +1,30 @@
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+
+  &.open {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.form {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  @include flexbox($flex-direction: column);
+  max-width: 450px;
+  width: 100%;
+  height: fit-content;
+  padding: 1.5rem;
+  background-color: $white-color;
+  border-radius: $border-radius;
+}
+
+.wrapper {
+  @include flexbox($justify-content: flex-end);
+}
