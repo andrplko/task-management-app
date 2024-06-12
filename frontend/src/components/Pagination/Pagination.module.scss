@@ -1,0 +1,47 @@
+.container {
+  @include flexbox($justify-content: center, $align-items: center);
+}
+
+.list {
+  @include flexbox($column-gap: 0.5rem);
+}
+
+.listItem {
+  background-color: $white-color;
+  border: 1px solid $grey-color;
+  border-radius: 4px;
+  color: $black-color;
+
+  &.active {
+    background-color: $blue-color;
+    border: 1px solid $blue-color;
+  }
+
+  &.active .button {
+    color: $white-color;
+  }
+
+  &:active {
+    transform: scale(1.03);
+  }
+}
+
+.button {
+  width: 100%;
+  padding: 6px 12px;
+  text-align: center;
+  font-size: 16px;
+  line-height: 140%;
+  background-color: transparent;
+
+  &.disabled {
+    color: $grey-color;
+    cursor: default;
+  }
+
+  @include breakpoint-max(breakpoint('sm')) {
+    padding: 3px 6px;
+    font-size: 14px;
+    line-height: 100%;
+  }
+}
