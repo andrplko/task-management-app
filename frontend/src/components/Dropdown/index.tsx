@@ -1,92 +1,62 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import classnames from 'classnames';
-import { DEFAULT_PAGE, DEFAULT_PER_PAGE } from '../../constants';
+import useUpdateQueryParams from '@hooks/useUpdateQueryParams';
+import useClickOutside from '@hooks/useClickOutside';
+import { DEFAULT_PAGE, DEFAULT_PER_PAGE } from '@constants';
 import styles from './Dropdown.module.scss';
 
 interface DropdownProps {
   options: string[];
+  queryParam: string;
   label: string;
   placeholder: string;
 }
 
-const Dropdown = ({
-  options,
-  label,
-  placeholder,
-}: DropdownProps) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const searchValue: string | null = searchParams.get('search');
+const Dropdown = ({ options, queryParam, label, placeholder }: DropdownProps) => {
+  const updateQueryParams = useUpdateQueryParams();
+  const [searchParams] = useSearchParams();
+  const queryParamValue = searchParams.get(queryParam);
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(placeholder);
+  const [selectedOption, setSelectedOption] = useState(placeholder);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const toggleOpen = () => setIsOpen(!isOpen);
 
-  const handleItemClick = (value: string) => {
-    setSelectedItem(value);
-    updateQueryParams({ status: value });
+  useClickOutside(dropdownRef, setIsOpen, isOpen);
+
+  const handleOptionClick = (value: string) => {
+    setSelectedOption(value);
+    updateQueryParams({
+      [queryParam]: value,
+      page: DEFAULT_PAGE,
+      limit: DEFAULT_PER_PAGE,
+    });
   };
 
-  const updateQueryParams = (query: Record<string, unknown>) => {
-    const params = new URLSearchParams({
-      search: searchValue ?? '',
-      ...query,
-      page: DEFAULT_PAGE,
-      limit: DEFAULT_PER_PAGE
-    })
-
-    if (!searchValue) {
-      params.delete('search');
-    }
-
-    if (query.status === 'All') {
-      params.delete('status');
-    }
-
-    setSearchParams(params);
-  }
-
   const dropdownHeadClassNames = classnames(styles.dropdownHead, {
-    [styles.opened]: isOpen,
-    [styles.active]: selectedItem !== placeholder,
+    [styles.open]: isOpen,
+    [styles.active]: selectedOption !== placeholder,
   });
 
-  const getItemClassNames = (value: string) =>
+  const getOptionClassNames = (value: string) =>
     classnames(styles.item, {
-      [styles.selected]: value === selectedItem,
+      [styles.selected]: value === selectedOption || value === queryParamValue,
     });
-
-  useEffect(() => {
-    function close(e: MouseEvent) {
-      const { target } = e;
-      if (target instanceof Node && !dropdownRef.current?.contains(target)) {
-        setIsOpen(false);
-      }
-    }
-
-    if (isOpen) {
-      window.addEventListener('click', close);
-    }
-
-    return function removeListener() {
-      window.removeEventListener('click', close);
-    };
-  }, [isOpen]);
 
   return (
     <div className={styles.container} ref={dropdownRef} onClick={toggleOpen}>
       <div className={styles.label}>{label}</div>
       <div className={styles.dropdown}>
-        <div className={dropdownHeadClassNames}>{selectedItem}</div>
+        <div className={dropdownHeadClassNames}>{selectedOption}</div>
         {isOpen && (
           <div className={styles.dropdownList}>
-            {options.map((value) => (
+            {options.map((option) => (
               <div
-                key={value}
-                onClick={() => handleItemClick(value)}
-                className={getItemClassNames(value)}
+                key={option}
+                onClick={() => handleOptionClick(option)}
+                className={getOptionClassNames(option)}
               >
-                {value}
+                {option}
               </div>
             ))}
           </div>
