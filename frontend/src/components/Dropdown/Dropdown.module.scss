@@ -8,9 +8,7 @@
 }
 
 .dropdownHead {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flexbox($justify-content: space-between, $align-items: center);
   width: 100%;
   padding: 8px 12px;
   font-size: 14px;
@@ -30,7 +28,7 @@
     transition: 0.3s ease-in-out;
   }
 
-  &.opened {
+  &.open {
     border-color: $blue-color;
   }
 
@@ -38,7 +36,7 @@
     color: $black-color;
   }
 
-  &.opened::after {
+  &.open::after {
     content: url('../../assets/arrow-up-icon.svg');
     transform: rotate(-180deg);
     transition: 0.3s ease-in-out;
