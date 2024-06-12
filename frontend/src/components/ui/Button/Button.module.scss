@@ -1,0 +1,23 @@
+.button {
+  @include flexbox($justify-content: center, $align-items: center);
+  padding: 0.625rem;
+  height: fit-content;
+  color: $white-color;
+  border-radius: $border-radius;
+  background-color: $blue-color;
+  transition: 0.3s ease;
+
+  &:hover {
+    background-color: $dark-blue-color;
+  }
+
+  &:active {
+    background-color: $dark-blue-color;
+    transform: scale(1.02);
+  }
+
+  &:disabled {
+    background-color: $grey-color;
+    cursor: not-allowed;
+  }
+}
