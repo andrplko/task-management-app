@@ -1,0 +1,10 @@
+.container {
+  position: relative;
+  @include flexbox($flex-direction: column);
+  min-height: 100vh;
+}
+
+.main {
+  @include flexbox($flex: 1);
+  background-color: $bg-color;
+}
