@@ -1,0 +1,37 @@
+@mixin flexbox(
+  $display: flex,
+  $flex-direction: null,
+  $justify-content: null,
+  $align-items: null,
+  $flex: null,
+  $row-gap: null,
+  $column-gap: null
+) {
+  $properties: (
+    display: $display,
+    flex-direction: $flex-direction,
+    justify-content: $justify-content,
+    align-items: $align-items,
+    flex: $flex,
+    row-gap: $row-gap,
+    column-gap: $column-gap,
+  );
+
+  @each $property, $value in $properties {
+    @if $value != null {
+      #{$property}: $value;
+    }
+  }
+}
+
+@mixin breakpoint-min($bp) {
+  @media screen and (min-width: $bp) {
+    @content;
+  }
+}
+
+@mixin breakpoint-max($bp) {
+  @media screen and (max-width: $bp) {
+    @content;
+  }
+}
