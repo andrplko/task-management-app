@@ -1,0 +1,25 @@
+.form {
+  @include flexbox($align-items: center, $column-gap: 1rem, $flex: 1);
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  color: $black-color;
+  border: 1px solid $grey-color;
+  border-radius: $border-radius;
+
+  &::placeholder {
+    color: $grey-color;
+  }
+
+  &:focus {
+    border-color: $blue-color;
+    caret-color: $blue-color;
+    outline: none;
+  }
+}
+
+.error {
+  display: none;
+}
