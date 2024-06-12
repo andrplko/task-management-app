@@ -1,0 +1,42 @@
+.container {
+  @include flexbox(
+    $flex-direction: column,
+    $align-items: center,
+    $flex: 1,
+    $row-gap: 1rem
+  );
+  padding: 1rem;
+}
+
+.wrapper {
+  max-width: 25rem;
+  width: 100%;
+}
+
+.image {
+  max-width: 23rem;
+  width: 100%;
+  height: 100%;
+}
+
+.title {
+  color: $purple-light-color;
+}
+
+.link {
+  padding: 0.625rem;
+  height: fit-content;
+  color: $white-color;
+  border-radius: $border-radius;
+  background-color: $blue-color;
+  transition: 0.3s ease;
+
+  &:hover {
+    background-color: $dark-blue-color;
+  }
+
+  &:active {
+    background-color: $dark-blue-color;
+    transform: scale(1.02);
+  }
+}
