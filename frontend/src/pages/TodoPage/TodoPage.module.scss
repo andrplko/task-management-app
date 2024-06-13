@@ -1,13 +1,8 @@
 .container {
-  @include flexbox($flex-direction: column, $flex: 1);
-}
-
-.wrapper {
   @include flexbox($flex-direction: column, $flex: 1, $row-gap: 1rem);
   max-width: 768px;
   width: 100%;
-  margin: auto;
-  padding: 1rem;
+  margin: 0 auto;
 }
 
 .control {

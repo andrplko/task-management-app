@@ -50,42 +50,38 @@ const TodoPage = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.wrapper}>
-        <div className={styles.control}>
-          <SearchBar />
-          <Dropdown
-            options={sortOptions}
-            queryParam="sort"
-            label="Sort"
-            placeholder="Sort by"
-          />
-          <Dropdown
-            options={taskStatuses}
-            queryParam="status"
-            label="Filter by status"
-            placeholder="Select status"
-          />
-        </div>
-        {isFetching || !data ? (
-            <Loader />
-          ) : (
-            <>
-              <TodoActionPanel>
-                <p className={styles.amount}>
-                  All tasks ({data.pagination.count})
-                </p>
-              </TodoActionPanel>
-              {data.results.length > 0 ? (
-                <>
-                  <TodoList data={data.results} />
-                  <Pagination data={data.pagination} />
-                </>
-              ) : (
-                <EmptyState />
-              )}
-            </>
-          )}
+      <div className={styles.control}>
+        <SearchBar />
+        <Dropdown
+          options={sortOptions}
+          queryParam="sort"
+          label="Sort"
+          placeholder="Sort by"
+        />
+        <Dropdown
+          options={taskStatuses}
+          queryParam="status"
+          label="Filter by status"
+          placeholder="Select status"
+        />
       </div>
+      {isFetching || !data ? (
+        <Loader />
+      ) : (
+        <>
+          <TodoActionPanel>
+            <p className={styles.amount}>All tasks ({data.pagination.count})</p>
+          </TodoActionPanel>
+          {data.results.length > 0 ? (
+            <>
+              <TodoList data={data.results} />
+              <Pagination data={data.pagination} />
+            </>
+          ) : (
+            <EmptyState />
+          )}
+        </>
+      )}
     </div>
   );
 };
