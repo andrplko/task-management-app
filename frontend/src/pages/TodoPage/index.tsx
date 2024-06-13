@@ -36,7 +36,7 @@ const TodoPage = () => {
   };
 
   const { data, isFetching, refetch } = useQuery<TodoResponse>({
-    queryKey: ['todos', searchParams.toString()],
+    queryKey: ['todos'],
     queryFn: getTodos,
   });
 
