@@ -7,7 +7,7 @@ const EmptyState = () => {
       <div className={styles.wrapper}>
         <NotFoundImage className={styles.image} />
       </div>
-      <h2 className={styles.title}>We were not able to find a match.</h2>
+      <h2 className={styles.title}>Sorry, we couldn't found any results</h2>
     </div>
   );
 };
