@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import Dropdown from '@components/Dropdown';
@@ -6,6 +6,7 @@ import EmptyState from '@components/EmptyState';
 import Pagination from '@components/Pagination';
 import SearchBar from '@components/SearchBar';
 import Loader from '@components/ui/Loader';
+import TodoList from '@components/TodoList';
 import TodoActionPanel from '@components/TodoActionPanel';
 import {
   DEFAULT_PAGE,
@@ -15,15 +16,11 @@ import {
   sortOptions,
   taskStatuses,
 } from '@constants';
-// import withLoading from '../../hocs/withLoading';
 import { executeRequest } from '@services/executeRequest';
 import { TodoResponse } from '@types';
 import styles from './TodoPage.module.scss';
 
-const TodoList = lazy(() => import('@components/TodoList'));
-
 const TodoPage = () => {
-  // const TodoListWithLoading = withLoading(TodoList);
   const [searchParams, setSearchParams] = useSearchParams({
     page: DEFAULT_PAGE,
     limit: DEFAULT_PER_PAGE,
@@ -38,8 +35,8 @@ const TodoPage = () => {
     });
   };
 
-  const { data, refetch } = useQuery<TodoResponse>({
-    queryKey: ['todos'],
+  const { data, isFetching, refetch } = useQuery<TodoResponse>({
+    queryKey: ['todos', searchParams.toString()],
     queryFn: getTodos,
   });
 
@@ -69,23 +66,25 @@ const TodoPage = () => {
             placeholder="Select status"
           />
         </div>
-        <Suspense fallback={<Loader />}>
-          {data &&
-            (data.results.length > 0 ? (
-              <>
-                <TodoActionPanel>
-                  <p className={styles.amount}>
-                    All tasks ({data.pagination.count})
-                  </p>
-                </TodoActionPanel>
-                <TodoList data={data.results} />
-                <Pagination data={data.pagination} />
-              </>
-            ) : (
-              <EmptyState />
-            ))}
-        </Suspense>
-        {/* <TodoListWithLoading data={data.results} isLoading={isLoading} /> */}
+        {isFetching || !data ? (
+            <Loader />
+          ) : (
+            <>
+              <TodoActionPanel>
+                <p className={styles.amount}>
+                  All tasks ({data.pagination.count})
+                </p>
+              </TodoActionPanel>
+              {data.results.length > 0 ? (
+                <>
+                  <TodoList data={data.results} />
+                  <Pagination data={data.pagination} />
+                </>
+              ) : (
+                <EmptyState />
+              )}
+            </>
+          )}
       </div>
     </div>
   );
