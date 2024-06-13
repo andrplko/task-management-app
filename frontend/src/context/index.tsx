@@ -10,7 +10,7 @@ import { ActionType, formModalReducer } from './reducers/formModalReducer';
 import { TodoItem } from '../types';
 
 export enum ModalMode {
-  View = 'view',
+  Create = 'create',
   Edit = 'edit',
 }
 
@@ -22,7 +22,7 @@ export interface InitialState {
 
 const initialState: InitialState = {
   isOpen: false,
-  mode: ModalMode.View,
+  mode: ModalMode.Create,
   todo: {
     _id: '',
     title: '',

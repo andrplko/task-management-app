@@ -39,7 +39,7 @@ const TodoFormModal = () => {
   );
 
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-    if (mode === ModalMode.View) {
+    if (mode === ModalMode.Create) {
       mutate({ url: BASE_URL, method: 'POST', body: data });
     } else {
       mutate({ url: `${BASE_URL}/${todo._id}`, method: 'PUT', body: data });

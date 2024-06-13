@@ -13,7 +13,7 @@ const TodoActionPanel = ({ children }: PropsWithChildren) => {
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setIsOpen(dispatch, true);
-    setMode(dispatch, ModalMode.View);
+    setMode(dispatch, ModalMode.Create);
   };
 
   return (
