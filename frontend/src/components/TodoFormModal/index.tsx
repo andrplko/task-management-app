@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import classnames from 'classnames';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import useClickOutside from '@hooks/useClickOutside';
-import useMutationWithInvalidate from '@hooks/useMutationWithInvalidate';
+import useTodoMutation from '@hooks/useTodoMutation';
 import { ModalMode, useFormModalContext } from '@context';
 import { setIsOpen } from '@context/actions';
 import Input from '../ui/Input';
@@ -19,9 +19,12 @@ interface FormValues {
 }
 
 const TodoFormModal = () => {
-  const { mutate } = useMutationWithInvalidate();
   const { state, dispatch } = useFormModalContext();
   const { isOpen, mode, todo } = state;
+
+  const { mutate } = useTodoMutation(
+    mode === ModalMode.Create ? 'create' : 'update'
+  );
 
   const {
     register,

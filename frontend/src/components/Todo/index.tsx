@@ -1,6 +1,6 @@
 import { MouseEvent } from 'react';
 import classnames from 'classnames';
-import useMutationWithInvalidate from '@hooks/useMutationWithInvalidate';
+import useTodoMutation from '@hooks/useTodoMutation';
 import { useFormModalContext, ModalMode } from '@context';
 import { setIsOpen, setMode, setTodo } from '@context/actions';
 import Button from '../ui/Button';
@@ -15,7 +15,7 @@ interface TodoProps {
 }
 
 const Todo = ({ data }: TodoProps) => {
-  const { mutate } = useMutationWithInvalidate();
+  const { mutate } = useTodoMutation('delete');
   const { dispatch } = useFormModalContext();
 
   const handleDelete = () => {

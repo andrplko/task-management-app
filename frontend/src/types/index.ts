@@ -13,3 +13,5 @@ export interface TodoResponse {
     pages: number;
   };
 }
+
+export type TodoAction = 'create' | 'update' | 'delete';
