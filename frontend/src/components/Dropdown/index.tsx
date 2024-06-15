@@ -13,7 +13,12 @@ interface DropdownProps {
   placeholder: string;
 }
 
-const Dropdown = ({ options, queryParam, label, placeholder }: DropdownProps) => {
+const Dropdown = ({
+  options,
+  queryParam,
+  label,
+  placeholder,
+}: DropdownProps) => {
   const updateQueryParams = useUpdateQueryParams();
   const [searchParams] = useSearchParams();
   const queryParamValue = searchParams.get(queryParam);
