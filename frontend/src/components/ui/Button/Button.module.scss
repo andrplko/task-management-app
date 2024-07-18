@@ -4,15 +4,14 @@
   height: fit-content;
   color: $white-color;
   border-radius: $border-radius;
-  background-color: $blue-color;
+  background-color: $purple-color;
   transition: 0.3s ease;
 
   &:hover {
-    background-color: $dark-blue-color;
+    opacity: 0.8;
   }
 
   &:active {
-    background-color: $dark-blue-color;
     transform: scale(1.02);
   }
 
