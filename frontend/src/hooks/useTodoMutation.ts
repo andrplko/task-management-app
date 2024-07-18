@@ -2,11 +2,7 @@ import { AxiosError } from 'axios';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { executeRequest } from '../services/executeRequest';
 import { showToastMessage } from '@utils/showToastMessage';
-import { TodoAction } from '@types';
-
-interface ErrorResponse {
-  message: string;
-}
+import { ErrorResponse, TodoAction } from '@types';
 
 const useTodoMutation = (action: TodoAction) => {
   const queryClient = useQueryClient();
@@ -15,7 +11,7 @@ const useTodoMutation = (action: TodoAction) => {
     mutationFn: executeRequest,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] });
-      showToastMessage(`Task successfully ${action}d!`, {
+      showToastMessage(`Task has been successfully ${action}d!`, {
         type: 'success',
         position: 'top-right',
       });
