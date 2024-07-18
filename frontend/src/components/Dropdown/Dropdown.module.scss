@@ -1,28 +1,26 @@
 .container {
   position: relative;
-  max-width: 200px;
+  max-width: 220px;
   width: 100%;
   height: fit-content;
-  margin-left: auto;
+  margin-top: 1rem;
   cursor: pointer;
 }
 
 .dropdownHead {
   @include flexbox($justify-content: space-between, $align-items: center);
   width: 100%;
-  padding: 8px 12px;
+  padding: 0.75rem 1rem;
   font-size: 14px;
   line-height: 20px;
-  color: $grey-color;
+  color: $placeholder-color;
   background-color: $white-color;
-  border: 1px solid $grey-color;
   border-radius: $border-radius;
   user-select: none;
   transition: 0.3s ease-in-out;
 
   &::after {
-    content: url('../../assets/arrow-down-icon.svg');
-    stroke: $grey-color;
+    content: url('../../assets/arrow-down-grey.svg');
     width: 24px;
     height: 24px;
     transition: 0.3s ease-in-out;
@@ -37,7 +35,7 @@
   }
 
   &.open::after {
-    content: url('../../assets/arrow-up-icon.svg');
+    content: url('../../assets/arrow-down-grey.svg');
     transform: rotate(-180deg);
     transition: 0.3s ease-in-out;
   }
@@ -49,6 +47,8 @@
 }
 
 .label {
+  color: $white-color;
+  font-size: 1.1rem;
   margin-bottom: 0.2rem;
 }
 
@@ -60,13 +60,12 @@
   padding: 4px;
   background: $white-color;
   border-radius: $border-radius;
-  border: 1px solid $grey-color;
   transition: 0.5s ease-in-out;
   z-index: 10;
 }
 
 .item {
-  padding: 8px;
+  padding: 0.75rem;
   font-size: 14px;
   line-height: 20px;
   color: $black-color;
@@ -75,19 +74,18 @@
   cursor: pointer;
 
   &:hover {
-    padding: 8px 12px;
     color: $white-color;
     border-radius: 8px;
-    background-color: $dark-blue-color;
+    background-color: $dropdown-item-color;
   }
 
   &.selected {
-    padding: 8px 12px;
+    padding: 0.75rem;
     font-size: 14px;
     line-height: 20px;
     color: $white-color;
     border-radius: $border-radius;
-    background-color: $blue-color;
+    background-color: $dropdown-item-color;
     opacity: 0.8;
     transition: 0.3s ease-in-out;
     cursor: pointer;
