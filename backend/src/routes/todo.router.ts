@@ -6,8 +6,11 @@ import {
   getTodos,
   updateTodo,
 } from '../controllers/todo.controller';
+import { verifyToken } from '../middlewares/auth.middleware';
 
 const router = express.Router();
+
+router.use(verifyToken);
 
 router.get('/', getTodos);
 router.get('/:id', getTodoById);
