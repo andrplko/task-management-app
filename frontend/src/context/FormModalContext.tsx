@@ -14,13 +14,17 @@ export enum ModalMode {
   Edit = 'edit',
 }
 
-export interface InitialState {
+interface FormModalContextProviderProps {
+  children: ReactNode;
+}
+
+export interface State {
   isOpen: boolean;
   mode: ModalMode;
   todo: TodoItem;
 }
 
-const initialState: InitialState = {
+const initialState: State = {
   isOpen: false,
   mode: ModalMode.Create,
   todo: {
@@ -32,7 +36,7 @@ const initialState: InitialState = {
 };
 
 const FormModalContext = createContext<{
-  state: InitialState;
+  state: State;
   dispatch: Dispatch<ActionType>;
 }>({
   state: initialState,
@@ -41,15 +45,17 @@ const FormModalContext = createContext<{
 
 const useFormModalContext = () => {
   const context = useContext(FormModalContext);
+
   if (!context) {
     throw new Error(
       'useFormModalContext must be used within a FormModalProvider'
     );
   }
+
   return context;
 };
 
-const FormModalProvider = ({ children }: { children: ReactNode }) => {
+const FormModalProvider = ({ children }: FormModalContextProviderProps) => {
   const [state, dispatch] = useReducer(formModalReducer, initialState);
   const value = useMemo(() => ({ state, dispatch }), [state, dispatch]);
 
