@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+}
+
+.label {
+  max-width: 100px;
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  border-radius: $border-radius;
+  cursor: pointer;
+}
+
+.radio {
+  opacity: 0;
+  appearance: none;
+  outline: none;
+}
