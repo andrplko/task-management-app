@@ -4,20 +4,24 @@
 
 .input {
   width: 100%;
-  padding: 10px;
-  color: $black-color;
-  border: 1px solid $grey-color;
-  border-radius: $border-radius;
+  padding: 1rem 1rem 1rem 3rem;
+  background: $white-color url('../../assets/search-icon.svg') no-repeat 1rem
+    center;
+  border: none;
+  outline: none;
 
   &::placeholder {
-    color: $grey-color;
+    color: $placeholder-color;
   }
 
   &:focus {
-    border-color: $blue-color;
-    caret-color: $blue-color;
-    outline: none;
+    caret-color: $purple-color;
   }
+}
+
+.button {
+  display: none;
+  padding: 1rem;
 }
 
 .error {
