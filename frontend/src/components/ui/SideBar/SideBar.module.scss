@@ -1,0 +1,23 @@
+.aside {
+  max-width: 300px;
+  width: 100%;
+  background-color: $aside-bg-color;
+}
+
+.container {
+  flex: 1;
+}
+
+.wrapper {
+  display: flex;
+  margin-top: 1rem;
+}
+
+.link {
+  color: $white-color;
+  font-size: 1.15rem;
+
+  &.active {
+    color: $violet-color;
+  }
+}
