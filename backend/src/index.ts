@@ -1,9 +1,15 @@
 import express from 'express';
 import cors from 'cors';
 import { config } from 'dotenv';
-import { connectToDatabase } from './services/database.service';
+import cookieParser from 'cookie-parser';
 import todo from './routes/todo.router';
+import auth from './routes/auth.router';
+import user from './routes/user.router';
 import { Connection } from './types';
+import morganMiddleware from './middlewares/morgan.middleware';
+import logger from './config/logger';
+import swagger from './config/swagger';
+import { connectToDatabase } from './config/database';
 
 config();
 
@@ -17,10 +23,22 @@ export let connection: Connection;
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ['http://localhost:5173'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+  })
+);
 app.use(express.json());
+app.use(cookieParser());
+app.use(morganMiddleware);
+swagger(app);
+
+app.use('/auth', auth);
+app.use('/user', user);
 app.use('/todo', todo);
 
 app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
+  logger.info(`Server is listening on port ${PORT} 🚀🚀🚀`);
 });
