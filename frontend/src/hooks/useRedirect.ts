@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import Routes from '@constants/routes';
-import useSignOut from './useSignOut';
+import useSignOutMutation from './useSignOutMutation';
 
 const useRedirect = () => {
   const navigate = useNavigate();
-  const { mutate: signOut } = useSignOut();
+  const { mutate: signOut } = useSignOutMutation();
 
   const redirectToSignIn = () => {
     signOut();
