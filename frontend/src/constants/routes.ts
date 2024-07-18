@@ -1,8 +1,8 @@
 const enum Routes {
   HOME = '/',
   TODO = '/todo',
-  SIGNUP = '/signup',
-  LOGIN = '/login',
+  SIGN_UP = '/signup',
+  SIGN_IN = '/signin',
 }
 
 export default Routes;
