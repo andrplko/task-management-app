@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import axiosInstance from '@services/axiosInstance';
 import { getAccessToken } from '@utils/tokenStore';
-import useRefresh from './useRefresh';
+import useRefreshMutation from './useRefreshMutation';
 import useRedirect from './useRedirect';
 import { ErrorResponse } from '@types';
 
 const useAxiosInterceptors = () => {
   const redirectToSignIn = useRedirect();
-  const { mutateAsync: refreshAccessToken } = useRefresh();
+  const { mutateAsync: refreshAccessToken } = useRefreshMutation();
 
   useEffect(() => {
     axiosInstance.interceptors.request.use(
