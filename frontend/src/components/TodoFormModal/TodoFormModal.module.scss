@@ -11,6 +11,15 @@
   }
 }
 
+.title {
+  flex: 1;
+  color: $purple-light-color;
+
+  @media screen and (max-width: 425px) {
+    font-size: 1.75rem;
+  }
+}
+
 .form {
   position: relative;
   top: 50%;
@@ -26,5 +35,10 @@
 }
 
 .wrapper {
-  @include flexbox($justify-content: flex-end);
+  @include flexbox($justify-content: center, $flex: 1);
+  margin-bottom: 0.5rem;
+}
+
+.button {
+  margin-left: auto;
 }
