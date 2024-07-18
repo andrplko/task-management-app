@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useTransition } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import classnames from 'classnames';
 import useUpdateQueryParams from '@hooks/useUpdateQueryParams';
@@ -19,8 +19,9 @@ const Dropdown = ({
   label,
   placeholder,
 }: DropdownProps) => {
-  const updateQueryParams = useUpdateQueryParams();
   const [searchParams] = useSearchParams();
+  const [, startTransition] = useTransition();
+  const updateQueryParams = useUpdateQueryParams();
   const queryParamValue = searchParams.get(queryParam);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(placeholder);
@@ -31,10 +32,12 @@ const Dropdown = ({
 
   const handleOptionClick = (value: string) => {
     setSelectedOption(value);
-    updateQueryParams({
-      [queryParam]: value,
-      page: DEFAULT_PAGE,
-      limit: DEFAULT_PER_PAGE,
+    startTransition(() => {
+      updateQueryParams({
+        [queryParam]: value,
+        page: DEFAULT_PAGE,
+        limit: DEFAULT_PER_PAGE,
+      });
     });
   };
 
