@@ -1,5 +1,5 @@
 const transformSortOption = (option: unknown) => {
-  const result: { $sort: Record<string, unknown> } = { $sort: {} };
+  let result: { $sort: Record<string, unknown> } | null = { $sort: {} };
 
   switch (option) {
     case 'ASC by status':
@@ -15,6 +15,7 @@ const transformSortOption = (option: unknown) => {
       result.$sort.title = -1;
       break;
     default:
+      result = null;
       break;
   }
 
