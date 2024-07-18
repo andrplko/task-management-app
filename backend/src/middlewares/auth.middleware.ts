@@ -23,7 +23,10 @@ export const verifyToken = async (
       return res.status(401).send({ message: 'Access token missing' });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as DecodedToken;
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET_KEY as string
+    ) as DecodedToken;
     const collection = connection.collections.user;
     const user: User | null = await collection.findOne<User>({
       _id: new ObjectId(decoded._id),
