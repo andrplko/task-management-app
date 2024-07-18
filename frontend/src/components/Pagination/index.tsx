@@ -1,3 +1,4 @@
+import { useTransition } from 'react';
 import classnames from 'classnames';
 import useUpdateQueryParams from '@hooks/useUpdateQueryParams';
 import { generatePaginationItems } from '@utils/generatePaginationItems';
@@ -11,33 +12,41 @@ interface PaginationProps {
 }
 
 const Pagination = ({ data }: PaginationProps) => {
+  const [, startTransition] = useTransition();
   const updateQueryParams = useUpdateQueryParams();
-  const sequence = generatePaginationItems(data.page, data.pages);
+  const { page, pages } = data;
+  const sequence = generatePaginationItems(page, pages);
 
   const handleNext = () => {
-    updateQueryParams({ page: data?.page + 1 });
+    startTransition(() => {
+      updateQueryParams({ page: page + 1 });
+    });
   };
 
   const handlePrev = () => {
-    if (data?.page > 1) {
-      updateQueryParams({ page: data?.page - 1 });
-    }
+    startTransition(() => {
+      if (page > 1) {
+        updateQueryParams({ page: page - 1 });
+      }
+    });
   };
 
   const handleClick = (value: number | string) => {
-    if (typeof value === 'number') {
-      updateQueryParams({ page: value });
-    }
+    startTransition(() => {
+      if (typeof value === 'number') {
+        updateQueryParams({ page: value });
+      }
+    });
   };
 
   const getListItemClassName = (value: number | string) => {
     return classnames(styles.listItem, {
-      [styles.active]: value === data?.page,
+      [styles.active]: value === page,
     });
   };
 
-  const isPrevButtonDisabled = data?.page === 1;
-  const isNextButtonDisabled = data?.page === data?.pages;
+  const isPrevButtonDisabled = page === 1;
+  const isNextButtonDisabled = page === pages;
 
   const prevButtonClassNames = classnames(styles.button, {
     [styles.disabled]: isPrevButtonDisabled,
