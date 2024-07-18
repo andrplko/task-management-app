@@ -1,4 +1,4 @@
-import { ModalMode, InitialState } from '..';
+import { ModalMode, State } from '../FormModalContext';
 import { TodoItem } from '@types';
 
 export enum Types {
@@ -13,10 +13,7 @@ export type ActionType =
   | { type: Types.SET_TODO; payload: TodoItem }
   | Record<string, never>;
 
-const formModalReducer = (
-  state: InitialState,
-  action: ActionType
-): InitialState => {
+const formModalReducer = (state: State, action: ActionType): State => {
   switch (action.type) {
     case Types.SET_IS_OPEN:
       return { ...state, isOpen: action.payload };
