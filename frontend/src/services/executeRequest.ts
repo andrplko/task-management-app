@@ -1,12 +1,6 @@
-import axios, { Method, AxiosHeaders, AxiosError } from 'axios';
-
-interface RequestParams {
-  url: string;
-  method: Method | string;
-  params?: unknown;
-  body?: unknown;
-  headers?: AxiosHeaders | null;
-}
+import { AxiosError } from 'axios';
+import axiosInstance from './axiosInstance';
+import { RequestParams } from '@types';
 
 const executeRequest = async ({
   url,
@@ -16,7 +10,7 @@ const executeRequest = async ({
   headers,
 }: RequestParams) => {
   try {
-    const response = await axios({
+    const response = await axiosInstance({
       url,
       method,
       params: params || {},
@@ -27,7 +21,7 @@ const executeRequest = async ({
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
-      console.error(error.message);
+      console.error(error.response);
     }
 
     throw error;
