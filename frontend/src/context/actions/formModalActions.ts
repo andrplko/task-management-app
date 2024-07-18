@@ -1,6 +1,6 @@
 import { Dispatch } from 'react';
 import { ActionType, Types } from '../reducers/formModalReducer';
-import { ModalMode } from '..';
+import { ModalMode } from '../FormModalContext';
 import { TodoItem } from '@types';
 
 const setIsOpen = (dispatch: Dispatch<ActionType>, payload: boolean) => {
