@@ -1,0 +1,44 @@
+.container {
+  @include flexbox ($flex-direction: column, $flex: 1);
+}
+
+.wrapper {
+  @include flexbox ($align-items: center);
+}
+
+.icon {
+  display: flex;
+}
+
+.item {
+  max-width: 200px;
+  width: 100%;
+  margin-left: 0.25rem;
+  cursor: pointer;
+}
+
+.title {
+  @include flexbox ($justify-content: space-between, $align-items: center, $flex: 1);
+  font-size: 1.25rem;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.symbol {
+  width: 24px;
+  height: 24px;
+  background: transparent url('../../assets/arrow-down-white.svg') no-repeat;
+  transition: 0.3s ease-in-out;
+
+  &.open {
+    background: transparent url('../../assets/arrow-down-white.svg') no-repeat;
+    transform: rotate(-180deg);
+    transition: 0.3s ease-in-out;
+  }
+}
+
+.content {
+  @include flexbox ($flex-direction: column);
+  padding: 0.5rem 1.5rem;
+  row-gap: 0.25rem;
+}
