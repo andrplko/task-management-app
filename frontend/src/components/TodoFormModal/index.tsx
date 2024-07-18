@@ -3,13 +3,14 @@ import classnames from 'classnames';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import useClickOutside from '@hooks/useClickOutside';
 import useTodoMutation from '@hooks/useTodoMutation';
-import { ModalMode, useFormModalContext } from '@context';
-import { setIsOpen } from '@context/actions';
+import { ModalMode, useFormModalContext } from '@context/FormModalContext';
+import { setIsOpen } from '@context/actions/formModalActions';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Textarea from '../ui/Textarea';
+import RadioButtonGroup from '@components/ui/RadioButtonGroup';
+import { radioButtonOptions } from '@constants';
 import CloseIcon from '@assets/close-icon.svg?react';
-import { BASE_URL } from '@constants';
 import styles from './TodoFormModal.module.scss';
 
 interface FormValues {
@@ -43,9 +44,13 @@ const TodoFormModal = () => {
 
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
     if (mode === ModalMode.Create) {
-      mutate({ url: BASE_URL, method: 'POST', body: data });
+      mutate({ url: '/todo', method: 'POST', body: data });
     } else {
-      mutate({ url: `${BASE_URL}/${todo._id}`, method: 'PUT', body: data });
+      mutate({
+        url: `/todo/${todo._id}`,
+        method: 'PUT',
+        body: data,
+      });
     }
 
     setIsOpen(dispatch, false);
@@ -64,6 +69,9 @@ const TodoFormModal = () => {
         className={styles.form}
       >
         <div className={styles.wrapper}>
+          <h2 className={styles.title}>
+            {mode === ModalMode.Edit ? 'Edit task' : 'Add a task'}
+          </h2>
           <Button
             type="button"
             onClick={() => setIsOpen(dispatch, false)}
@@ -92,15 +100,12 @@ const TodoFormModal = () => {
           defaultValue={mode === ModalMode.Edit ? todo.description : ''}
           registration={register('description')}
         />
-        <Input
-          id="status"
+        <RadioButtonGroup
+          legend="Status"
           name="status"
-          label="Status"
-          type="text"
-          defaultValue={mode === ModalMode.Edit ? todo.status : ''}
-          placeholder="Status"
+          selectedValue={mode === ModalMode.Edit ? todo.status : ''}
+          options={radioButtonOptions}
           registration={register('status')}
-          error={errors.status}
         />
         <Button type="submit" disabled={!isDirty || !isValid}>
           {mode === ModalMode.Edit ? 'Edit task' : 'Add new task'}
