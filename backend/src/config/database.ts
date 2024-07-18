@@ -1,7 +1,9 @@
-import { Collection, Db, Document, MongoClient } from 'mongodb';
+import { Collection, Db, Document, MongoClient, MongoError } from 'mongodb';
 import { config } from 'dotenv';
 import { todoSchema } from '../models/todo.model';
+import { userSchema } from '../models/user.model';
 import { Connection } from '../types';
+import logger from '../config/logger';
 
 config();
 
@@ -26,19 +28,26 @@ export async function connectToDatabase(): Promise<Connection> {
     await client.connect();
     const db: Db = client.db(databaseName);
 
+    const [user, todo] = await Promise.all([
+      await db.createCollection('user', userSchema),
+      await db.createCollection('todo', todoSchema),
+    ]);
+
     cachedClient = client;
     cachedDb = db;
     collections = {
-      todo: await db.createCollection('todo', {
-        validator: {
-          $jsonSchema: todoSchema,
-        },
-      }),
+      user,
+      todo,
     };
 
+    logger.info('Successfully connected to the database!');
     return { client, db, collections };
   } catch (error) {
-    console.error(error);
-    throw new Error();
+    if (error instanceof MongoError) {
+      logger.error(`MongoDB error: ${error.message}`);
+    }
+
+    logger.error('Failed to connect to the database');
+    throw new Error('Failed to connect to the database');
   }
 }
