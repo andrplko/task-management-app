@@ -1,4 +1,4 @@
-import { Document, ObjectId } from 'mongodb';
+import { Document, MongoError, ObjectId } from 'mongodb';
 import { Request, Response } from 'express';
 import { connection } from './../index';
 import Todo from '../models/todo.model';
@@ -32,9 +32,11 @@ export const getTodos = async (req: Request, res: Response) => {
       pipeline.push({ $match: { status } });
     }
 
-    const sortStage = transformSortOption(sort);
-    if (Object.keys(sortStage.$sort).length > 0) {
-      pipeline.push(sortStage);
+    if (sort) {
+      const transformedSortOption = transformSortOption(sort);
+      if (transformedSortOption) {
+        pipeline.push(transformedSortOption);
+      }
     }
 
     pipeline.push({
@@ -62,7 +64,7 @@ export const getTodos = async (req: Request, res: Response) => {
     const [{ metadata, data }] = await collection.aggregate(pipeline).toArray();
     const countOfTodos = metadata[0]?.total || 0;
 
-    res.status(200).send({
+    res.status(200).json({
       results: data,
       pagination: {
         count: countOfTodos,
@@ -71,8 +73,8 @@ export const getTodos = async (req: Request, res: Response) => {
       },
     });
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).send({ message: error.message });
+    if (error instanceof MongoError) {
+      res.status(500).json({ message: error.message });
     }
   }
 };
@@ -81,16 +83,16 @@ export const getTodoById = async (req: Request, res: Response) => {
   try {
     const collection = connection.collections.todo;
     const query = { _id: new ObjectId(req.params.id) };
-    const result = await collection.findOne(query);
+    const result = await collection.findOne<Todo>(query);
 
-    if (result) {
-      res.status(200).send(result);
-    } else {
-      res.status(404).send('Not Found');
+    if (!result) {
+      res.status(404).json({ message: 'Todo not found' });
     }
+
+    res.status(200).json(result);
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).send({ message: error.message });
+    if (error instanceof MongoError) {
+      res.status(500).json({ message: error.message });
     }
   }
 };
@@ -101,10 +103,10 @@ export const createTodo = async (req: Request, res: Response) => {
     const collection = connection.collections.todo;
     const result = await collection.insertOne(newTodo);
 
-    res.status(201).send(result);
+    res.status(201).json(result);
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).send({ message: error.message });
+    if (error instanceof MongoError) {
+      res.status(500).json({ message: error.message });
     }
   }
 };
@@ -116,10 +118,10 @@ export const updateTodo = async (req: Request, res: Response) => {
     const query = { _id: new ObjectId(req.params.id) };
 
     const result = await collection.updateOne(query, { $set: updatedTodo });
-    res.status(200).send(result);
+    res.status(200).json(result);
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).send({ message: error.message });
+    if (error instanceof MongoError) {
+      res.status(500).json({ message: error.message });
     }
   }
 };
@@ -130,10 +132,10 @@ export const deleteTodo = async (req: Request, res: Response) => {
     const query = { _id: new ObjectId(req.params.id) };
 
     const result = await collection.deleteOne(query);
-    res.status(204).send(result);
+    res.status(204).json(result);
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).send({ message: error.message });
+    if (error instanceof MongoError) {
+      res.status(500).json({ message: error.message });
     }
   }
 };
