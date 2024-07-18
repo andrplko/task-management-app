@@ -6,4 +6,9 @@ export default [
   { languageOptions: { globals: globals.node } },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
+  {
+    rules: {
+      '@typescript-eslint/no-unused-vars': 'off',
+    },
+  },
 ];
