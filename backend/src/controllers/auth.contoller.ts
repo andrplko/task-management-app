@@ -116,7 +116,7 @@ const refresh = async (req: Request, res: Response) => {
   }
 };
 
-const signout = async (res: Response) => {
+const signout = async (_req: Request, res: Response) => {
   res.clearCookie('refresh_token', {
     httpOnly: true,
     sameSite: 'none',
