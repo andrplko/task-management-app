@@ -1,0 +1,16 @@
+.container {
+  @include flexbox($flex-direction: column, $flex: 1, $row-gap: 1rem);
+  max-width: 768px;
+  width: 100%;
+  margin: 1rem auto;
+}
+
+.control {
+  @include flexbox($align-items: flex-end, $column-gap: 1rem);
+}
+
+.amount {
+  padding: 0.25rem;
+  font-size: 1.25rem;
+  font-weight: 400;
+}

@@ -1,0 +1,36 @@
+.fieldset {
+  @include flexbox($column-gap: 1rem);
+  padding: 0 0 1.5rem;
+  outline: none;
+  border: none;
+}
+
+.radio_todo:checked + .todo {
+  background-color: $dark-grey-color;
+  color: $white-color;
+}
+
+.todo {
+  border: 2px solid $dark-grey-color;
+  color: $dark-grey-color;
+}
+
+.radio_in_progress:checked + .in_progress {
+  background-color: $orange-color;
+  color: $white-color;
+}
+
+.in_progress {
+  border: 2px solid $orange-color;
+  color: $orange-color;
+}
+
+.radio_done:checked + .done {
+  background-color: $blue-color;
+  color: $white-color;
+}
+
+.done {
+  border: 2px solid $blue-color;
+  color: $blue-color;
+}

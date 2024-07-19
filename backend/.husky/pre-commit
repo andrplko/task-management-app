@@ -1,0 +1,4 @@
+cd backend
+
+npm run format:fix
+npm run lint

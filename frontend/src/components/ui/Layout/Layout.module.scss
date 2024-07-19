@@ -1,0 +1,14 @@
+.container {
+  position: relative;
+  @include flexbox($flex-direction: row);
+  min-height: 100vh;
+}
+
+.main {
+  @include flexbox($flex: 1);
+  background-color: $bg-color;
+}
+
+.wrapper {
+  @include flexbox($flex-direction: column, $flex: 1);
+}

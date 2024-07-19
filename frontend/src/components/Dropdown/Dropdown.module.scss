@@ -1,0 +1,93 @@
+.container {
+  position: relative;
+  max-width: 220px;
+  width: 100%;
+  height: fit-content;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.dropdownHead {
+  @include flexbox($justify-content: space-between, $align-items: center);
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 14px;
+  line-height: 20px;
+  color: $placeholder-color;
+  background-color: $white-color;
+  border-radius: $border-radius;
+  user-select: none;
+  transition: 0.3s ease-in-out;
+
+  &::after {
+    content: url('../../assets/arrow-down-grey.svg');
+    width: 24px;
+    height: 24px;
+    transition: 0.3s ease-in-out;
+  }
+
+  &.open {
+    border-color: $blue-color;
+  }
+
+  &.active {
+    color: $black-color;
+  }
+
+  &.open::after {
+    content: url('../../assets/arrow-down-grey.svg');
+    transform: rotate(-180deg);
+    transition: 0.3s ease-in-out;
+  }
+
+  &:hover {
+    border-color: $blue-color;
+    transition: 0.3s ease-in-out;
+  }
+}
+
+.label {
+  color: $white-color;
+  font-size: 1.1rem;
+  margin-bottom: 0.2rem;
+}
+
+.dropdownList {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  padding: 4px;
+  background: $white-color;
+  border-radius: $border-radius;
+  transition: 0.5s ease-in-out;
+  z-index: 10;
+}
+
+.item {
+  padding: 0.75rem;
+  font-size: 14px;
+  line-height: 20px;
+  color: $black-color;
+  transition: 0.3s ease-in-out;
+  user-select: none;
+  cursor: pointer;
+
+  &:hover {
+    color: $white-color;
+    border-radius: 8px;
+    background-color: $dropdown-item-color;
+  }
+
+  &.selected {
+    padding: 0.75rem;
+    font-size: 14px;
+    line-height: 20px;
+    color: $white-color;
+    border-radius: $border-radius;
+    background-color: $dropdown-item-color;
+    opacity: 0.8;
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+  }
+}

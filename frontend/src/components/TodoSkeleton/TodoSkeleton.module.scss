@@ -1,0 +1,93 @@
+.container {
+  @include flexbox($justify-content: space-between, $align-items: center);
+  max-width: 768px;
+  width: 100%;
+  height: 112px;
+  padding: 1rem;
+  background-color: $white-color;
+  border-radius: $border-radius;
+  box-shadow:
+    0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  user-select: none;
+
+  .skeleton {
+    background-color: $grey-color;
+    background-image: linear-gradient(
+      90deg,
+      $grey-color 25%,
+      #f7f7f7 50%,
+      $grey-color 75%
+    );
+    background-size: 200px 100%;
+    background-repeat: no-repeat;
+    animation: skeleton-loading 1.5s infinite linear;
+    border-radius: 4px;
+  }
+}
+
+.info {
+  @include flexbox(
+    $flex-direction: column,
+    $justify-content: space-between,
+    $flex: 1
+  );
+}
+
+.title {
+  margin: 0.25rem 0;
+  color: $purple-color;
+
+  &.skeleton {
+    width: 80px;
+    height: 28px;
+  }
+}
+
+.description {
+  white-space: pre-wrap;
+
+  &.skeleton {
+    width: 160px;
+    height: 24px;
+  }
+}
+
+.wrapper {
+  @include flexbox($flex: 1);
+}
+
+.status {
+  @include flexbox($align-items: center);
+  border-radius: 5px;
+  font-weight: 400;
+  padding: 0 0.5rem;
+  max-height: fit-content;
+  max-width: 100px;
+  width: 100%;
+
+  &.skeleton {
+    width: 100px;
+    height: 24px;
+  }
+}
+
+.actions {
+  @include flexbox($justify-content: flex-end, $flex: 1, $column-gap: 0.5rem);
+
+  .skeleton {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200px 0;
+  }
+
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
