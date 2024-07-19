@@ -4,20 +4,20 @@
 }
 
 .input {
-  padding: 10px;
+  padding: 0.75rem;
   background-color: $white-color;
   color: $black-color;
   border: 1px solid $grey-color;
   border-radius: $border-radius;
 
   &:focus {
-    border-color: $blue-color;
-    caret-color: $blue-color;
+    border-color: $purple-color;
+    caret-color: $purple-color;
     outline: none;
   }
 
   &::placeholder {
-    color: $grey-color;
+    color: $placeholder-color;
   }
 
   &::-webkit-inner-spin-button,
