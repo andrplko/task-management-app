@@ -1,6 +1,6 @@
 import { MouseEvent, PropsWithChildren } from 'react';
-import { ModalMode, useFormModalContext } from '@context';
-import { setIsOpen, setMode } from '@context/actions';
+import { ModalMode, useFormModalContext } from '@context/FormModalContext';
+import { setIsOpen, setMode } from '@context/actions/formModalActions';
 import Button from '../ui/Button';
 import TodoFormModal from '../TodoFormModal';
 import PlusIcon from '@assets/plus-icon.svg?react';
