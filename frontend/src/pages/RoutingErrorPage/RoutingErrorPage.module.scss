@@ -3,8 +3,8 @@
     $flex-direction: column,
     $justify-content: center,
     $align-items: center,
-    $flex: 1,
-    $row-gap: 1rem
+    $row-gap: 1rem,
+    $flex: 1
   );
   padding: 1rem;
 }
@@ -22,22 +22,4 @@
 
 .title {
   color: $purple-light-color;
-}
-
-.link {
-  padding: 0.625rem;
-  height: fit-content;
-  color: $white-color;
-  border-radius: $border-radius;
-  background-color: $blue-color;
-  transition: 0.3s ease;
-
-  &:hover {
-    background-color: $dark-blue-color;
-  }
-
-  &:active {
-    background-color: $dark-blue-color;
-    transform: scale(1.02);
-  }
 }
