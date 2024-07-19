@@ -1,13 +1,14 @@
 import { MouseEvent } from 'react';
 import classnames from 'classnames';
 import useTodoMutation from '@hooks/useTodoMutation';
-import { useFormModalContext, ModalMode } from '@context';
-import { setIsOpen, setMode, setTodo } from '@context/actions';
+import useUpdateQueryParams from '@hooks/useUpdateQueryParams';
+import { useFormModalContext, ModalMode } from '@context/FormModalContext';
+import { setIsOpen, setMode, setTodo } from '@context/actions/formModalActions';
 import Button from '../ui/Button';
 import { TodoItem } from '@types';
+import { DEFAULT_PAGE } from '@constants';
 import EditIcon from '@assets/edit-icon.svg?react';
 import DeleteIcon from '@assets/delete-icon.svg?react';
-import { BASE_URL } from '@constants';
 import styles from './Todo.module.scss';
 
 interface TodoProps {
@@ -17,9 +18,13 @@ interface TodoProps {
 const Todo = ({ data }: TodoProps) => {
   const { mutate } = useTodoMutation('delete');
   const { dispatch } = useFormModalContext();
+  const updateQueryParams = useUpdateQueryParams();
 
   const handleDelete = () => {
-    mutate({ url: `${BASE_URL}/${data._id}`, method: 'DELETE' });
+    mutate({ url: `/todo/${data._id}`, method: 'DELETE' });
+    updateQueryParams({
+      page: DEFAULT_PAGE,
+    });
   };
 
   const handleUpdate = (e: MouseEvent<HTMLButtonElement>) => {
