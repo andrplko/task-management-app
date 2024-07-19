@@ -1,71 +1,39 @@
-import { useEffect } from 'react';
+import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import Dropdown from '@components/Dropdown';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import EmptyState from '@components/EmptyState';
 import Pagination from '@components/Pagination';
-import SearchBar from '@components/SearchBar';
 import Loader from '@components/ui/Loader';
 import TodoList from '@components/TodoList';
 import TodoActionPanel from '@components/TodoActionPanel';
-import {
-  DEFAULT_PAGE,
-  DEFAULT_PER_PAGE,
-  DEFAULT_STATUS,
-  BASE_URL,
-  sortOptions,
-  taskStatuses,
-} from '@constants';
+import { DEFAULT_PAGE, DEFAULT_PER_PAGE, DEFAULT_STATUS } from '@constants';
 import { executeRequest } from '@services/executeRequest';
 import { TodoResponse } from '@types';
 import styles from './TodoPage.module.scss';
 
 const TodoPage = () => {
-  const [searchParams, setSearchParams] = useSearchParams({
+  const [searchParams] = useSearchParams({
     page: DEFAULT_PAGE,
     limit: DEFAULT_PER_PAGE,
     status: DEFAULT_STATUS,
   });
 
-  const getTodos = async () => {
+  const getTodos = useCallback(async () => {
     return await executeRequest({
-      url: BASE_URL,
+      url: '/todo',
       method: 'GET',
       params: searchParams,
     });
-  };
+  }, [searchParams]);
 
-  const { data, isFetching, refetch } = useQuery<TodoResponse>({
-    queryKey: ['todos'],
+  const { data, isLoading, isFetching } = useSuspenseQuery<TodoResponse>({
+    queryKey: ['todos', searchParams.toString()],
     queryFn: getTodos,
   });
 
-  useEffect(() => {
-    setSearchParams(searchParams);
-  }, []);
-
-  useEffect(() => {
-    refetch();
-  }, [searchParams]);
-
   return (
     <div className={styles.container}>
-      <div className={styles.control}>
-        <SearchBar />
-        <Dropdown
-          options={sortOptions}
-          queryParam="sort"
-          label="Sort"
-          placeholder="Sort by"
-        />
-        <Dropdown
-          options={taskStatuses}
-          queryParam="status"
-          label="Filter by status"
-          placeholder="Select status"
-        />
-      </div>
-      {isFetching || !data ? (
+      {isLoading || !data ? (
         <Loader />
       ) : (
         <>
@@ -74,7 +42,7 @@ const TodoPage = () => {
           </TodoActionPanel>
           {data.results.length > 0 ? (
             <>
-              <TodoList data={data.results} />
+              <TodoList data={data.results} isFetching={isFetching} />
               <Pagination data={data.pagination} />
             </>
           ) : (
